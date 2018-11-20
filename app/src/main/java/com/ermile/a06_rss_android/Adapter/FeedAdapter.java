@@ -3,22 +3,15 @@ package com.ermile.a06_rss_android.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.ermile.a06_rss_android.Interface.ItemClickListener;
-import com.ermile.a06_rss_android.MainActivity;
 import com.ermile.a06_rss_android.Modle.RSSObject;
 import com.ermile.a06_rss_android.R;
-import com.ermile.a06_rss_android.Modle.RSSObject;
 import com.ermile.a06_rss_android.web_view;
 
 class FeedViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener
@@ -82,7 +75,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedViewHolder> {
 
         holder.txtTitle.setText(rssObject.getItems().get(position).getTitle());
         holder.txtPubDate.setText(rssObject.getItems().get(position).getPubDate());
-        holder.txtContent.setText(rssObject.getItems().get(position).getContent());
+        holder.txtContent.setText(Html.fromHtml(rssObject.getItems().get(position).getContent() ) );
 
         holder.setItemClickListener(new ItemClickListener() {
             @Override
