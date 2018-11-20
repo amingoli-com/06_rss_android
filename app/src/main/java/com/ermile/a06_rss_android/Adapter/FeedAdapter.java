@@ -14,6 +14,8 @@ import com.ermile.a06_rss_android.Modle.RSSObject;
 import com.ermile.a06_rss_android.R;
 import com.ermile.a06_rss_android.web_view;
 
+import org.jsoup.Jsoup;
+
 class FeedViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener
 {
 
@@ -75,7 +77,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedViewHolder> {
 
         holder.txtTitle.setText(rssObject.getItems().get(position).getTitle());
         holder.txtPubDate.setText(rssObject.getItems().get(position).getPubDate());
-        holder.txtContent.setText(Html.fromHtml(rssObject.getItems().get(position).getContent() ) );
+
+        Jsoup.parse(holder.txtContent.setText ( rssObject.getItems().get(position).getContent() ));
+//        holder.txtContent.setText(Html.fromHtml(rssObject.getItems().get(position).getContent() ) );
+
 
         holder.setItemClickListener(new ItemClickListener() {
             @Override
