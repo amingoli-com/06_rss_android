@@ -21,6 +21,8 @@ class FeedViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
 
     public TextView txtTitle,txtPubDate,txtContent;
     private ItemClickListener itemClickListener;
+    String html = "<html><head><title>First parse</title></head>"
+            + "<body><p>Parsed HTML into a doc.</p></body></html>";
 
 
     public FeedViewHolder(View itemView) {
@@ -78,8 +80,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedViewHolder> {
         holder.txtTitle.setText(rssObject.getItems().get(position).getTitle());
         holder.txtPubDate.setText(rssObject.getItems().get(position).getPubDate());
 
-        Jsoup.parse(holder.txtContent.setText ( rssObject.getItems().get(position).getContent() ));
-//        holder.txtContent.setText(Html.fromHtml(rssObject.getItems().get(position).getContent() ) );
+        String xx = Jsoup.parse(rssObject.getItems ().get ( position ).getContent ()).body().text();
+        holder.txtContent.setText (xx);
 
 
         holder.setItemClickListener(new ItemClickListener() {
