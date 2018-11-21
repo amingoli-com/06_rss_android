@@ -37,9 +37,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        toolbar = (Toolbar)findViewById(R.id.toolbar);
-//        toolbar.setTitle("عوض زاده دات کام");
-//        setSupportActionBar (toolbar);
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar.setTitle("عوض زاده دات کام");
+        setSupportActionBar (toolbar);
 
         recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getBaseContext(),LinearLayoutManager.VERTICAL,false);

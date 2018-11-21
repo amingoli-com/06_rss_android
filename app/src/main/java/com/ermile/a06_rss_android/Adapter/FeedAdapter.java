@@ -80,8 +80,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedViewHolder> {
         holder.txtTitle.setText(rssObject.getItems().get(position).getTitle());
         holder.txtPubDate.setText(rssObject.getItems().get(position).getPubDate());
 
-        String xx = Jsoup.parse(rssObject.getItems ().get ( position ).getContent ()).body().text();
-        holder.txtContent.setText (xx);
+        String txtContent = Jsoup.parse(rssObject.getItems ().get ( position ).getContent ()).body().text();
+        holder.txtContent.setText (txtContent);
 
 
         holder.setItemClickListener(new ItemClickListener() {
@@ -91,13 +91,15 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedViewHolder> {
                 {
 
                     String link = rssObject.getItems ().get ( position ).getLink ();
+                    String title = rssObject.getItems ().get ( position ).getTitle ();
 
 
-                    if (treejon(link))
+                    if (treejon( link , title))
                     {
 //                        Toast.makeText(view.getContext () , "اطلاعات ارسال شد!" , Toast.LENGTH_SHORT).show( );
                         Intent post_info_form = new Intent(view.getContext (), web_view.class);
                         post_info_form.putExtra("post_link" , link);
+                        post_info_form.putExtra ( "post_title" , title );
 
                         view.getContext ().startActivity ( post_info_form );
 
@@ -109,9 +111,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedViewHolder> {
         });
     }
 
-    private boolean treejon(String link) {
+    private boolean treejon(String link , String title) {
 
         if (link ==null){
+            return false;
+        }
+        if (title == null){
             return false;
         }
 

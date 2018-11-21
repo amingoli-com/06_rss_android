@@ -3,6 +3,7 @@ package com.ermile.a06_rss_android;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
@@ -12,6 +13,7 @@ import android.widget.ProgressBar;
 public class web_view extends AppCompatActivity {
     private WebView webbb;
     private ProgressBar progressBar;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,22 +29,33 @@ public class web_view extends AppCompatActivity {
         }
         //   end menu back
 
+
+        // get form count adn title
         Bundle getinfo_form = getIntent ().getExtras ();
         if (getinfo_form != null)
         {
             String get_link="";
+            String get_title="";
 
 
             if (getinfo_form.containsKey ( "post_link" )){
                 get_link = getinfo_form.getString ( "post_link" );
             }
+            if (getinfo_form.containsKey ( "post_title" )){
+                get_title = getinfo_form.getString ( "post_title" );
+            }
 
             String url = get_link;
+            String title = get_title;
 
 
 
             webbb.setWebViewClient(new myWebClient());
             webbb.loadUrl(url);
+
+            toolbar = findViewById(R.id.toolbar);
+            toolbar.setTitle(title);
+            setSupportActionBar (toolbar);
 
 
         }
