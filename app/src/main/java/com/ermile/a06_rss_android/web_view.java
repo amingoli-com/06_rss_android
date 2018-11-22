@@ -13,7 +13,7 @@ import android.widget.ProgressBar;
 public class web_view extends AppCompatActivity {
     private WebView webbb;
     private ProgressBar progressBar;
-    Toolbar toolbar;
+    Toolbar toolbar_wv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,27 +35,28 @@ public class web_view extends AppCompatActivity {
         if (getinfo_form != null)
         {
             String get_link="";
-            String get_title="";
+            String get_Author="";
 
 
             if (getinfo_form.containsKey ( "post_link" )){
                 get_link = getinfo_form.getString ( "post_link" );
             }
-            if (getinfo_form.containsKey ( "post_title" )){
-                get_title = getinfo_form.getString ( "post_title" );
+            if (getinfo_form.containsKey ( "post_Author" )){
+                get_Author = getinfo_form.getString ( "post_Author" );
             }
 
             String url = get_link;
-            String title = get_title;
+            String Author = get_Author;
 
 
 
             webbb.setWebViewClient(new myWebClient());
             webbb.loadUrl(url);
 
-            toolbar = findViewById(R.id.toolbar);
-            toolbar.setTitle(title);
-            setSupportActionBar (toolbar);
+            toolbar_wv = findViewById(R.id.toolbar);
+            toolbar_wv.setTitle("نویسنده: " + Author);
+            setSupportActionBar (toolbar_wv);
+            gone_toolbar();
 
 
         }
@@ -93,6 +94,14 @@ public class web_view extends AppCompatActivity {
             progressBar.setVisibility ( View.GONE );
         }
     }
+
+
+    private void gone_toolbar() {
+        if (progressBar.getVisibility () == View.GONE) {
+            toolbar_wv.setVisibility ( View.GONE );
+        }
+    }
+
 
 
 

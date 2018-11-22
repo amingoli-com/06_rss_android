@@ -91,15 +91,15 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedViewHolder> {
                 {
 
                     String link = rssObject.getItems ().get ( position ).getLink ();
-                    String title = rssObject.getItems ().get ( position ).getTitle ();
+                    String Author = rssObject.getItems ().get ( position ).getAuthor ();
 
 
-                    if (treejon( link , title))
+                    if (treejon( link , Author))
                     {
 //                        Toast.makeText(view.getContext () , "اطلاعات ارسال شد!" , Toast.LENGTH_SHORT).show( );
                         Intent post_info_form = new Intent(view.getContext (), web_view.class);
                         post_info_form.putExtra("post_link" , link);
-                        post_info_form.putExtra ( "post_title" , title );
+                        post_info_form.putExtra ( "post_Author" , Author );
 
                         view.getContext ().startActivity ( post_info_form );
 
@@ -111,12 +111,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedViewHolder> {
         });
     }
 
-    private boolean treejon(String link , String title) {
+    private boolean treejon(String link , String Author) {
 
         if (link ==null){
             return false;
         }
-        if (title == null){
+        if (Author == null){
             return false;
         }
 

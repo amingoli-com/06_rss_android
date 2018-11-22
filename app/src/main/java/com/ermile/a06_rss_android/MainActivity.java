@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,14 +32,31 @@ public class MainActivity extends AppCompatActivity {
 
     private final String RSS_link="https://news.amfm.ir/feed/";
     private final String RSS_to_Json_API ="https://api.rss2json.com/v1/api.json?rss_url=";
+//    SwipeRefreshLayout sw_ref = findViewById ( R.id.swipelayout );
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
+        SwipeRefreshLayout sw_refresh = findViewById(R.id.swipelayout);
+        sw_refresh.setOnRefreshListener ( new SwipeRefreshLayout.OnRefreshListener ( ) {
+                @Override
+                public void onRefresh() {
+                    loadRSS ();
+                }
+
+
+        } );
+
+
+
         toolbar = (Toolbar)findViewById(R.id.toolbar);
-        toolbar.setTitle("عوض زاده دات کام");
+        toolbar.setTitle("@string/app_name");
         setSupportActionBar (toolbar);
 
         recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
@@ -51,15 +69,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     private void loadRSS() {
         @SuppressLint("StaticFieldLeak") AsyncTask<String,String,String> loadRSSAsync = new AsyncTask<String, String, String>() {
+            final ProgressDialog mDialog = new ProgressDialog(MainActivity.this);
+            final SwipeRefreshLayout sw_ref = findViewById ( R.id.swipelayout );
 
-            ProgressDialog mDialog = new ProgressDialog(MainActivity.this);
 
             @Override
             protected void onPreExecute() {
-                mDialog.setMessage("صبور باشید..");
-                mDialog.show();
+                sw_ref.setRefreshing(true);
+//                mDialog.setMessage("صبور باشید..");
+//                mDialog.show();
             }
 
             @Override
@@ -72,7 +93,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             protected void onPostExecute(String s) {
-                mDialog.dismiss();
+                sw_ref.setRefreshing(false);
+//                mDialog.dismiss();
                 rssObject = new Gson().fromJson(s,RSSObject.class);
                 FeedAdapter adapter = new FeedAdapter(rssObject,getBaseContext());
                 recyclerView.setAdapter(adapter);
@@ -96,10 +118,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_refresh){
-            loadRSS();}
+            loadRSS ();}
         if (item.getItemId() == R.id.about) {
             startActivity ( new Intent ( this,about.class ) );
         }
         return true;
     }
+
+
+
 }
