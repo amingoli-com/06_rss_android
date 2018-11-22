@@ -3,7 +3,6 @@ package com.ermile.a06_rss_android;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -13,8 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.Button;
 
 import com.ermile.a06_rss_android.Adapter.FeedAdapter;
 import com.ermile.a06_rss_android.Common.HTTPDateHandler;
@@ -32,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
 
     private final String RSS_link="https://news.amfm.ir/feed/";
     private final String RSS_to_Json_API ="https://api.rss2json.com/v1/api.json?rss_url=";
-//    SwipeRefreshLayout sw_ref = findViewById ( R.id.swipelayout );
 
 
 
@@ -55,11 +51,11 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        toolbar = (Toolbar)findViewById(R.id.toolbar);
-        toolbar.setTitle("@string/app_name");
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("فید خبری حضرت معصومه (س)");
         setSupportActionBar (toolbar);
 
-        recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getBaseContext(),LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
@@ -72,15 +68,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadRSS() {
         @SuppressLint("StaticFieldLeak") AsyncTask<String,String,String> loadRSSAsync = new AsyncTask<String, String, String>() {
-            final ProgressDialog mDialog = new ProgressDialog(MainActivity.this);
             final SwipeRefreshLayout sw_ref = findViewById ( R.id.swipelayout );
 
 
             @Override
             protected void onPreExecute() {
                 sw_ref.setRefreshing(true);
-//                mDialog.setMessage("صبور باشید..");
-//                mDialog.show();
+
             }
 
             @Override
@@ -94,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(String s) {
                 sw_ref.setRefreshing(false);
-//                mDialog.dismiss();
                 rssObject = new Gson().fromJson(s,RSSObject.class);
                 FeedAdapter adapter = new FeedAdapter(rssObject,getBaseContext());
                 recyclerView.setAdapter(adapter);
